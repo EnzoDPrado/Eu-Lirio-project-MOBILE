@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">loginPage</string>
+    <string name="login_name">Login</string>
+    <string name="email_name">E-mail</string>
+    <string name="password_name">Senha</string>
+    <string name="does_have_account">Não tem uma conta?</string>
+    <string name="sign_up_now">Cadastre-se agora!</string>
+
+</resources>
