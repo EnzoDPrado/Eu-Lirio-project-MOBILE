@@ -2,8 +2,16 @@
     <string name="app_name">loginPage</string>
     <string name="login_name">Login</string>
     <string name="email_name">E-mail</string>
+    <string name="name">Nome</string>
+    <string name="user_name">User</string>
     <string name="password_name">Senha</string>
+    <string name="password_name_confirm">Confirmar a senha</string>
     <string name="does_have_account">Não tem uma conta?</string>
     <string name="sign_up_now">Cadastre-se agora!</string>
+    <string name="date_of_birth">Data de nascimento</string>
+    <string name="title_activity_register_page">RegisterPage</string>
+    <string name="your_data">SEUS DADOS</string>
+    <string name="advance">Avançar</string>
+    <string name="title_activity_register_page_second_part">RegisterPageSecondPart</string>
 
 </resources>

@@ -24,8 +24,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.loginpage.ui.theme.LoginPageTheme
+import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
-class MainActivity : ComponentActivity() {
+class RegisterPageSecondPart : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -34,29 +35,22 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
-                    loginPage()
+                    registerPageSecondPart()
                 }
             }
         }
     }
 }
 
-
-
-
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun loginPage() {
+fun registerPageSecondPart() {
 
 
-    var emailValue by rememberSaveable {
+    var userName by rememberSaveable {
         mutableStateOf("")
     }
 
-    var passwordValue by remember {
-        mutableStateOf("")
-    }
 
 
     Column(
@@ -82,7 +76,7 @@ fun loginPage() {
 
                 Card(
                     modifier = Modifier
-                        .height(380.dp)
+                        .height(445.dp)
                         .width(325.dp),
                     shape = RoundedCornerShape(50.dp),
                 ) {
@@ -96,101 +90,78 @@ fun loginPage() {
 
                         Text(
                             color = colorResource(id = R.color.eulirio_purple_text_color),
-                            text = stringResource(id = R.string.login_name),
+                            text = stringResource(id = R.string.your_data),
                             fontWeight = FontWeight.Bold,
-                            fontSize = 40.sp,
+                            fontSize = 24.sp,
                         )
-                        OutlinedTextField(value = emailValue, onValueChange = {
-                            emailValue = it;
-                        },
-
-                            modifier = Modifier
-                                .height(53.dp)
-                                .width(240.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            textStyle = TextStyle(fontSize = 12.sp),
-
-
-
-                            label = {
-                                Text(
-                                    text = stringResource(id = R.string.email_name),
-                                    fontSize = 13.sp
-
-                                )
-                            }
-                        )
-                        Spacer(modifier = Modifier.height(20.dp))
                         OutlinedTextField(
-                            value = passwordValue, onValueChange = {
-                                passwordValue = it;
-
+                            value = userName, onValueChange = {
+                                userName = it;
                             },
                             modifier = Modifier
                                 .height(53.dp)
-                                .width(240.dp),
+                                .width(280.dp),
                             shape = RoundedCornerShape(12.dp),
                             textStyle = TextStyle(fontSize = 12.sp),
                             label = {
-                                Text(
-                                    text = stringResource(id = R.string.password_name),
-                                    fontSize = 13.sp
-                                )
-
+                                Text(text = stringResource(id = R.string.name), fontSize = 13.sp)
                             }
-
-
                         )
-
                         Spacer(modifier = Modifier.height(20.dp))
 
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(end = 30.dp)
+                                .padding(start = 24.dp)
                             ,
-                            horizontalAlignment = Alignment.End,
+                            horizontalAlignment = Alignment.Start,
 
-
-                            ) {
-
-                            Button(
-                                onClick = {
-
-                                },
-                                modifier = Modifier
-                                    .width(160.dp)
-                                    .height(34.dp),
-                                shape = RoundedCornerShape(30.dp),
-                                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.eulirio_purple))
-
-
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.login_name),
-                                    color = colorResource(
-                                        id = R.color.white
-                                    )
-                                )
-                            }
+                        ) {
                             Text(
-                                modifier = Modifier
-                                    .padding(top = 7.dp),
-                                text = stringResource(id = R.string.does_have_account),
                                 color = colorResource(id = R.color.eulirio_purple_text_color),
-                                fontSize = 11.sp,
-                            )
-                            Text(
-                                text = stringResource(id = R.string.sign_up_now),
-                                color = colorResource(id = R.color.black),
-                                fontSize = 11.sp,
-                            )
+                                text = stringResource(id = R.string.date_of_birth),
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 15.sp
+                                )
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                ,
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+
+                            ) {
+                                
+                            }
 
                         }
 
+
+
+
+                        Button(
+                            onClick = {
+
+                            },
+                            modifier = Modifier
+                                .width(160.dp)
+                                .height(34.dp),
+                            shape = RoundedCornerShape(30.dp),
+                            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.eulirio_purple))
+
+
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.advance),
+                                color = colorResource(
+                                    id = R.color.white
+                                )
+                            )
+                        }
+
+
                     }
-
-
 
 
                 }
@@ -205,13 +176,8 @@ fun loginPage() {
 }
 
 
-fun Text(text: String, Color: String) {
-
-}
-
-
 @Preview(showBackground = true)
 @Composable
-fun loginPagePreview() {
-    loginPagePreview()
+fun registerPageSecondPartPreview() {
+    registerPageSecondPartPreview()
 }

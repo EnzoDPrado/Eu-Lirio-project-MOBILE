@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.loginpage.ui.theme.LoginPageTheme
 
-class MainActivity : ComponentActivity() {
+class RegisterPage : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -34,27 +34,31 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
-                    loginPage()
+                    registerPage()
                 }
             }
         }
     }
 }
 
-
-
-
-
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun loginPage() {
+fun registerPage() {
 
+
+    var userValue by remember{
+        mutableStateOf("")
+    }
 
     var emailValue by rememberSaveable {
         mutableStateOf("")
     }
 
     var passwordValue by remember {
+        mutableStateOf("")
+    }
+
+    var confirmPasswordValue by remember{
         mutableStateOf("")
     }
 
@@ -82,7 +86,7 @@ fun loginPage() {
 
                 Card(
                     modifier = Modifier
-                        .height(380.dp)
+                        .height(445.dp)
                         .width(325.dp),
                     shape = RoundedCornerShape(50.dp),
                 ) {
@@ -96,34 +100,55 @@ fun loginPage() {
 
                         Text(
                             color = colorResource(id = R.color.eulirio_purple_text_color),
-                            text = stringResource(id = R.string.login_name),
+                            text = stringResource(id = R.string.your_data),
                             fontWeight = FontWeight.Bold,
-                            fontSize = 40.sp,
+                            fontSize = 24.sp,
                         )
-                        OutlinedTextField(value = emailValue, onValueChange = {
-                            emailValue = it;
-                        },
-
+                        OutlinedTextField(
+                            value = userValue, onValueChange = {
+                                userValue = it;
+                            },
                             modifier = Modifier
                                 .height(53.dp)
                                 .width(240.dp),
                             shape = RoundedCornerShape(12.dp),
                             textStyle = TextStyle(fontSize = 12.sp),
-
-
-
                             label = {
-                                Text(
-                                    text = stringResource(id = R.string.email_name),
-                                    fontSize = 13.sp
-
-                                )
+                                Text(text = stringResource(id = R.string.user_name), fontSize = 13.sp)
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        OutlinedTextField(
+                            value = emailValue, onValueChange = {
+                                emailValue = it;
+                            },
+                            modifier = Modifier
+                                .height(53.dp)
+                                .width(240.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            textStyle = TextStyle(fontSize = 12.sp),
+                            label = {
+                                Text(text = stringResource(id = R.string.email_name), fontSize = 13.sp)
                             }
                         )
                         Spacer(modifier = Modifier.height(20.dp))
                         OutlinedTextField(
                             value = passwordValue, onValueChange = {
                                 passwordValue = it;
+                            },
+                            modifier = Modifier
+                                .height(53.dp)
+                                .width(240.dp),
+                            shape = RoundedCornerShape(12.dp),
+                            textStyle = TextStyle(fontSize = 12.sp),
+                            label = {
+                                Text(text = stringResource(id = R.string.password_name), fontSize = 13.sp)
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        OutlinedTextField(
+                            value = confirmPasswordValue, onValueChange = {
+                                confirmPasswordValue = it;
 
                             },
                             modifier = Modifier
@@ -132,65 +157,36 @@ fun loginPage() {
                             shape = RoundedCornerShape(12.dp),
                             textStyle = TextStyle(fontSize = 12.sp),
                             label = {
-                                Text(
-                                    text = stringResource(id = R.string.password_name),
-                                    fontSize = 13.sp
-                                )
-
+                                Text(text = stringResource(id = R.string.password_name_confirm), fontSize = 13.sp)
                             }
-
 
                         )
 
                         Spacer(modifier = Modifier.height(20.dp))
 
-                        Column(
+
+                        Button(
+                            onClick = {
+
+                            },
                             modifier = Modifier
-                                .fillMaxSize()
-                                .padding(end = 30.dp)
-                            ,
-                            horizontalAlignment = Alignment.End,
+                                .width(160.dp)
+                                .height(34.dp),
+                            shape = RoundedCornerShape(30.dp),
+                            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.eulirio_purple))
 
 
-                            ) {
-
-                            Button(
-                                onClick = {
-
-                                },
-                                modifier = Modifier
-                                    .width(160.dp)
-                                    .height(34.dp),
-                                shape = RoundedCornerShape(30.dp),
-                                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.eulirio_purple))
-
-
-                            ) {
-                                Text(
-                                    text = stringResource(id = R.string.login_name),
-                                    color = colorResource(
-                                        id = R.color.white
-                                    )
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.advance),
+                                color = colorResource(
+                                    id = R.color.white
                                 )
-                            }
-                            Text(
-                                modifier = Modifier
-                                    .padding(top = 7.dp),
-                                text = stringResource(id = R.string.does_have_account),
-                                color = colorResource(id = R.color.eulirio_purple_text_color),
-                                fontSize = 11.sp,
                             )
-                            Text(
-                                text = stringResource(id = R.string.sign_up_now),
-                                color = colorResource(id = R.color.black),
-                                fontSize = 11.sp,
-                            )
-
                         }
 
+
                     }
-
-
 
 
                 }
@@ -205,13 +201,8 @@ fun loginPage() {
 }
 
 
-fun Text(text: String, Color: String) {
-
-}
-
-
 @Preview(showBackground = true)
 @Composable
-fun loginPagePreview() {
-    loginPagePreview()
+fun registerPagePreview() {
+    registerPagePreview()
 }
