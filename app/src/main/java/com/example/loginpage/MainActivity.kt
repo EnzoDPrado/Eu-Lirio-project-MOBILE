@@ -83,6 +83,7 @@ fun loginPage() {
         mutableStateOf(false)
     }
 
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween
@@ -265,7 +266,6 @@ fun loginPage() {
                                     }
                                 }
                             ) {
-                                val context = LocalContext.current
                                 val intent = Intent(context, RegisterPage::class.java)
                                 context.startActivity(intent)
                             }
