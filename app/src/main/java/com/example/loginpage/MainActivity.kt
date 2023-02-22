@@ -6,11 +6,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
@@ -138,10 +135,10 @@ fun loginPage() {
 
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(start = 24.dp, top = 12.dp, end = 24.dp)
-                                .border(5.dp, Color(0xFF381871)),
+                                .padding(start = 24.dp, top = 12.dp, end = 24.dp),
+                            textStyle = TextStyle(fontSize = 16.sp),
+
                             shape = RoundedCornerShape(12.dp),
-                            textStyle = TextStyle(fontSize = 12.sp),
 
                             label = {
                                 Text(
@@ -154,7 +151,7 @@ fun loginPage() {
                                 Icon(
                                     Icons.Outlined.Email,
                                     contentDescription = "Icone de e-mail",
-                                    modifier = Modifier.height(16.dp),
+                                    modifier = Modifier.height(24.dp),
                                     tint = colorResource(id = R.color.eulirio_purple_text_color_border)
                                 )
                             },
@@ -162,6 +159,7 @@ fun loginPage() {
                             keyboardOptions =  KeyboardOptions(
                                 imeAction = ImeAction.Next
                             ),
+
                             singleLine = true
                         )
 
@@ -177,7 +175,7 @@ fun loginPage() {
                                 .fillMaxWidth()
                                 .padding(start = 24.dp, end = 24.dp),
                             shape = RoundedCornerShape(12.dp),
-                            textStyle = TextStyle(fontSize = 12.sp),
+                            textStyle = TextStyle(fontSize = 16.sp),
 
                             label = {
                                 Text(
@@ -190,7 +188,7 @@ fun loginPage() {
                                 Icon(
                                     Icons.Outlined.Lock,
                                     contentDescription = "Icone de cadeado",
-                                    modifier = Modifier.height(16.dp),
+                                    modifier = Modifier.height(24.dp),
                                     tint = colorResource(id = R.color.eulirio_purple_text_color_border)
                                 )
                             },
@@ -253,22 +251,32 @@ fun loginPage() {
                                     .padding(top = 7.dp),
                                 text = stringResource(id = R.string.does_have_account),
                                 color = colorResource(id = R.color.black),
-                                fontSize = 11.sp,
+                                fontSize = 12.sp,
                             )
-                            ClickableText(
-                                text = buildAnnotatedString {
-                                    withStyle(
-                                        style = SpanStyle(
-                                            color = colorResource(id = R.color.eulirio_purple_text_color)
-                                        )
-                                    ) {
-                                        append(stringResource(id = R.string.sign_up_now))
-                                    }
-                                }
-                            ) {
-                                val intent = Intent(context, RegisterPage::class.java)
-                                context.startActivity(intent)
-                            }
+                            Text(
+                                modifier = Modifier
+                                    .clickable {
+                                        val intent = Intent(context, RegisterPage::class.java)
+                                        context.startActivity(intent)
+                                    },
+                                text = stringResource(id = R.string.sign_up_now),
+                                color = colorResource(id = R.color.eulirio_purple_text_color),
+                                fontSize = 13.sp,
+                            )
+//                            ClickableText(
+//                                text = buildAnnotatedString {
+//                                    withStyle(
+//                                        style = SpanStyle(
+//                                            color = colorResource(id = R.color.eulirio_purple_text_color)
+//                                        )
+//                                    ) {
+//                                        append(stringResource(id = R.string.sign_up_now))
+//                                    }
+//                                }
+//                            ) {
+//                                val intent = Intent(context, RegisterPage::class.java)
+//                                context.startActivity(intent)
+//                            }
                         }
 
                     }

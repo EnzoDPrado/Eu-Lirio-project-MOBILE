@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -73,6 +74,10 @@ fun registerPage() {
         mutableStateOf("")
     }
 
+    var showConfirmPassword by remember {
+        mutableStateOf(false)
+    }
+
 
     Column(
         modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween
@@ -105,6 +110,7 @@ fun registerPage() {
                         modifier = Modifier
                             .padding(top = 40.dp, bottom = 45.dp)
                             .fillMaxSize(),
+                            //.scrollable(),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -262,17 +268,17 @@ fun registerPage() {
                             },
 
                             trailingIcon = {
-                                IconButton(onClick = { showPassword = !showPassword }) {
+                                IconButton(onClick = { showConfirmPassword = !showConfirmPassword }) {
                                     Icon(
                                         modifier = Modifier.height(16.dp),
-                                        contentDescription = if (showPassword) "Show Password" else "Hide Password",
-                                        imageVector = if (showPassword) Icons.Outlined.Email else Icons.Outlined.Lock,
+                                        contentDescription = if (showConfirmPassword) "Show Password" else "Hide Password",
+                                        imageVector = if (showConfirmPassword) Icons.Outlined.Email else Icons.Outlined.Lock,
                                         tint = colorResource(id = R.color.eulirio_purple_text_color_border)
                                     )
                                 }
                             },
 
-                            visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+                            visualTransformation = if (showConfirmPassword) VisualTransformation.None else PasswordVisualTransformation(),
 
                             singleLine = true
                         )

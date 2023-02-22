@@ -13,5 +13,6 @@
     <string name="your_data">SEUS DADOS</string>
     <string name="advance">Avançar</string>
     <string name="title_activity_register_page_second_part">RegisterPageSecondPart</string>
+    <string name="erro_message_input_required">Todos os campos são obrigatórios.</string>
 
 </resources>
