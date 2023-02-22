@@ -1,15 +1,13 @@
 package com.example.loginpage
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -22,7 +20,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,17 +28,13 @@ import com.example.loginpage.ui.theme.LoginPageTheme
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
-import androidx.compose.material.icons.rounded.Email
-import androidx.compose.material.icons.rounded.Lock
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.withStyle
-import androidx.core.content.ContextCompat.startActivity
 
 
 class MainActivity : ComponentActivity() {
@@ -69,6 +62,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun loginPage() {
 
+    val context = LocalContext.current
+
     var emailValue by rememberSaveable {
         mutableStateOf("")
     }
@@ -80,10 +75,33 @@ fun loginPage() {
         mutableStateOf(false)
     }
 
-    val context = LocalContext.current
+    var emailErrorRequiredInput by remember {
+        mutableStateOf(false)
+    }
+
+    var passwordErrorRequiredInput by remember {
+        mutableStateOf(false)
+    }
+
+    var colorIconEmail = colorResource(id = R.color.eulirio_purple_text_color_border)
+
+    var colorIconPassword = colorResource(id = R.color.eulirio_purple_text_color_border)
+
+    val emailFocusRequester = remember {
+        FocusRequester()
+    }
+
+    val passwordFocusRequester = remember {
+        FocusRequester()
+    }
+
+    val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.SpaceBetween
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xFFF2F2F2)),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -106,16 +124,16 @@ fun loginPage() {
                 Card(
                     modifier = Modifier
                         .padding(start = 24.dp, end = 24.dp)
-                        .height(400.dp),
+                        .height(400.dp)
+                        .background(Color(0x4DFFFCEA)),
                     shape = RoundedCornerShape(50.dp),
-                    elevation = 0.dp,
-//                    backgroundColor = Color(0xFFF7F5EF)
+                    elevation = 2.dp,
+                    backgroundColor = Color.White
                 ) {
                     Column(
                         modifier = Modifier
                             .padding(top = 36.dp)
-                            .fillMaxSize()
-                            .background(Color(0x4DFFFCEA)),
+                            .fillMaxSize(),
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
@@ -135,7 +153,8 @@ fun loginPage() {
 
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(start = 24.dp, top = 12.dp, end = 24.dp),
+                                .padding(start = 24.dp, top = 12.dp, end = 24.dp)
+                                .focusRequester(emailFocusRequester),
                             textStyle = TextStyle(fontSize = 16.sp),
 
                             shape = RoundedCornerShape(12.dp),
@@ -152,9 +171,11 @@ fun loginPage() {
                                     Icons.Outlined.Email,
                                     contentDescription = "Icone de e-mail",
                                     modifier = Modifier.height(24.dp),
-                                    tint = colorResource(id = R.color.eulirio_purple_text_color_border)
+                                    tint = colorIconEmail
                                 )
                             },
+
+                            isError = emailErrorRequiredInput,
 
                             keyboardOptions =  KeyboardOptions(
                                 imeAction = ImeAction.Next
@@ -173,7 +194,8 @@ fun loginPage() {
 
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(start = 24.dp, end = 24.dp),
+                                .padding(start = 24.dp, end = 24.dp)
+                                .focusRequester(passwordFocusRequester),
                             shape = RoundedCornerShape(12.dp),
                             textStyle = TextStyle(fontSize = 16.sp),
 
@@ -189,7 +211,7 @@ fun loginPage() {
                                     Icons.Outlined.Lock,
                                     contentDescription = "Icone de cadeado",
                                     modifier = Modifier.height(24.dp),
-                                    tint = colorResource(id = R.color.eulirio_purple_text_color_border)
+                                    tint = colorIconPassword
                                 )
                             },
 
@@ -199,15 +221,36 @@ fun loginPage() {
                                         modifier = Modifier.height(16.dp),
                                         contentDescription = if (showPassword) "Show Password" else "Hide Password",
                                         imageVector = if (showPassword) Icons.Outlined.Email else Icons.Outlined.Lock,
-                                        tint = colorResource(id = R.color.eulirio_purple_text_color_border)
+                                        tint = Color(0xFF010101)
                                     )
                                 }
                             },
 
+                            isError = passwordErrorRequiredInput,
+
                             visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+
+                            keyboardOptions =  KeyboardOptions(
+                                imeAction = ImeAction.Done
+                            ),
+                            keyboardActions = KeyboardActions (
+                                onDone = {
+                                    focusManager.clearFocus()
+                                }
+                            ),
 
                             singleLine = true
                         )
+
+                        if (emailErrorRequiredInput || passwordErrorRequiredInput) {
+                            Text(
+                                modifier = Modifier
+                                    .padding(top = 2.dp),
+                                text = stringResource(id = R.string.erro_message_input_required),
+                                color = Color(0xFFB00020),
+                                fontSize = 12.sp,
+                            )
+                        }
 
                         Spacer(modifier = Modifier.height(20.dp))
 
@@ -223,7 +266,19 @@ fun loginPage() {
 
                             Button(
                                 onClick = {
+                                    if(emailValue.isEmpty()) {
+                                        emailErrorRequiredInput = true
+                                        colorIconEmail = Color(0xFFB00020)
+                                        emailFocusRequester.requestFocus()
+                                    }
+                                    else emailErrorRequiredInput = false
 
+                                    if(passwordValue.isEmpty()) {
+                                        passwordErrorRequiredInput = true
+                                        colorIconPassword = Color(0xFFB00020)
+                                        passwordFocusRequester.requestFocus()
+                                    }
+                                    else passwordErrorRequiredInput = false
                                 },
                                 modifier = Modifier
                                     .width(160.dp),
@@ -232,20 +287,26 @@ fun loginPage() {
 
 
                             ) {
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = stringResource(id = R.string.login_name),
-                                        color = colorResource(
-                                            id = R.color.white
-                                        ),
-                                        fontSize = 18.sp,
-                                        fontWeight = FontWeight.SemiBold
-                                    )
-
-                                }
+                                Text(
+                                    text = stringResource(id = R.string.login_name),
+                                    color = colorResource(
+                                        id = R.color.white
+                                    ),
+                                    fontSize = 18.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
                             }
+
+                            if(!emailValue.isEmpty()) {
+                                emailErrorRequiredInput = false
+                                colorIconEmail = colorResource(id = R.color.eulirio_purple_text_color_border)
+                            }
+
+                            if(!passwordValue.isEmpty()) {
+                                passwordErrorRequiredInput = false
+                                colorIconPassword = colorResource(id = R.color.eulirio_purple_text_color_border)
+                            }
+
                             Text(
                                 modifier = Modifier
                                     .padding(top = 7.dp),
@@ -261,22 +322,8 @@ fun loginPage() {
                                     },
                                 text = stringResource(id = R.string.sign_up_now),
                                 color = colorResource(id = R.color.eulirio_purple_text_color),
-                                fontSize = 13.sp,
+                                fontSize = 14.sp,
                             )
-//                            ClickableText(
-//                                text = buildAnnotatedString {
-//                                    withStyle(
-//                                        style = SpanStyle(
-//                                            color = colorResource(id = R.color.eulirio_purple_text_color)
-//                                        )
-//                                    ) {
-//                                        append(stringResource(id = R.string.sign_up_now))
-//                                    }
-//                                }
-//                            ) {
-//                                val intent = Intent(context, RegisterPage::class.java)
-//                                context.startActivity(intent)
-//                            }
                         }
 
                     }
