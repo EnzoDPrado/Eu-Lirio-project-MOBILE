@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
@@ -28,7 +26,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -60,6 +57,8 @@ class RegisterPage : ComponentActivity() {
 fun registerPage() {
 
     val context = LocalContext.current
+
+    val focusManager = LocalFocusManager.current
 
     var userValue by remember{
         mutableStateOf("")
@@ -124,8 +123,6 @@ fun registerPage() {
     val confirmPasswordFocusRequester = remember {
         FocusRequester()
     }
-
-    val focusManager = LocalFocusManager.current
 
     Column(
         modifier = Modifier
@@ -413,7 +410,7 @@ fun registerPage() {
                                     else confirmPasswordErrorRequiredInput = false
 
                                     if (!userValue.isEmpty() && !emailValue.isEmpty() && !passwordValue.isEmpty() && !confirmPasswordValue.isEmpty()) {
-                                        val intent = Intent(context, RegisterPageSecondPart::class.java)
+                                        val intent = Intent(context, RegisterPageThirdPart::class.java)
                                         context.startActivity(intent)
                                     }
                                 },
