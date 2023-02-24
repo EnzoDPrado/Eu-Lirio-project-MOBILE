@@ -2,6 +2,7 @@ package com.example.loginpage
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
@@ -71,7 +72,6 @@ fun registerPage() {
     var passwordValue by remember {
         mutableStateOf("")
     }
-
     var showPassword by remember {
         mutableStateOf(false)
     }
@@ -79,7 +79,6 @@ fun registerPage() {
     var confirmPasswordValue by remember{
         mutableStateOf("")
     }
-
     var showConfirmPassword by remember {
         mutableStateOf(false)
     }
@@ -87,39 +86,38 @@ fun registerPage() {
     var userErrorRequiredInput by remember {
         mutableStateOf(false)
     }
-
     var emailErrorRequiredInput by remember {
         mutableStateOf(false)
     }
-
     var passwordErrorRequiredInput by remember {
         mutableStateOf(false)
     }
-
     var confirmPasswordErrorRequiredInput by remember {
         mutableStateOf(false)
     }
 
+    var invalidEmail by remember {
+        mutableStateOf(false)
+    }
+
+    var clickButton by remember {
+        mutableStateOf(false)
+    }
+
     var colorIconUser = colorResource(id = R.color.eulirio_purple_text_color_border)
-
     var colorIconEmail = colorResource(id = R.color.eulirio_purple_text_color_border)
-
     var colorIconPassword = colorResource(id = R.color.eulirio_purple_text_color_border)
-
     var colorIconConfirmPassword = colorResource(id = R.color.eulirio_purple_text_color_border)
 
     val userFocusRequester = remember {
         FocusRequester()
     }
-
     val emailFocusRequester = remember {
         FocusRequester()
     }
-
     val passwordFocusRequester = remember {
         FocusRequester()
     }
-
     val confirmPasswordFocusRequester = remember {
         FocusRequester()
     }
@@ -151,7 +149,7 @@ fun registerPage() {
                 Card(
                     modifier = Modifier
                         .padding(start = 24.dp, end = 24.dp)
-                        .height(400.dp),
+                        .height(440.dp),
                     shape = RoundedCornerShape(50.dp),
                     elevation = 4.dp,
                     backgroundColor = Color.White
@@ -254,6 +252,14 @@ fun registerPage() {
                                 ),
 
                                 singleLine = true
+                            )
+
+                            if (invalidEmail) Text(
+                                    modifier = Modifier
+                                        .padding(top = 3.dp),
+                                    text = stringResource(id = R.string.erro_message_invalid_email),
+                                    color = Color(0xFFB00020),
+                                    fontSize = 12.sp,
                             )
 
                             Spacer(modifier = Modifier.height(8.dp))
@@ -367,20 +373,18 @@ fun registerPage() {
                                 singleLine = true
                             )
 
-                            if (userErrorRequiredInput || emailErrorRequiredInput || passwordErrorRequiredInput || confirmPasswordErrorRequiredInput) {
-                                Text(
+                            if (clickButton && (userValue.isEmpty() || emailValue.isEmpty() || passwordValue.isEmpty() || confirmPasswordValue.isEmpty())) Text(
                                     modifier = Modifier
                                         .padding(top = 3.dp),
                                     text = stringResource(id = R.string.erro_message_input_required),
                                     color = Color(0xFFB00020),
                                     fontSize = 12.sp,
                                 )
-                            }
-
-                            Spacer(modifier = Modifier.height(24.dp))
 
                             Button(
                                 onClick = {
+                                    clickButton = true
+
                                     if(userValue.isEmpty()) {
                                         userErrorRequiredInput = true
                                         colorIconUser = Color(0xFFB00020)
@@ -409,13 +413,38 @@ fun registerPage() {
                                     }
                                     else confirmPasswordErrorRequiredInput = false
 
-                                    if (!userValue.isEmpty() && !emailValue.isEmpty() && !passwordValue.isEmpty() && !confirmPasswordValue.isEmpty()) {
-                                        val intent = Intent(context, RegisterPageThirdPart::class.java)
-                                        context.startActivity(intent)
+                                    if (passwordValue != confirmPasswordValue) {
+                                        confirmPasswordErrorRequiredInput = true
+                                        colorIconConfirmPassword = Color(0xFFB00020)
+                                        confirmPasswordFocusRequester.requestFocus()
+
+                                        Toast.makeText(
+                                            context,
+                                            "Insira senhas iguais, por favor.",
+                                            Toast.LENGTH_LONG
+                                        ).show()
                                     }
+
+                                    if ('@' !in emailValue) {
+                                        emailErrorRequiredInput = true
+                                        colorIconEmail = Color(0xFFB00020)
+                                        emailFocusRequester.requestFocus()
+
+                                        invalidEmail = true
+                                    }
+
+                                    if (!userErrorRequiredInput && !emailErrorRequiredInput && !passwordErrorRequiredInput && !confirmPasswordErrorRequiredInput) {
+
+                                        val intent = Intent(context, RegisterPageSecondPart::class.java)
+                                        context.startActivity(intent)
+
+                                    }
+
+
                                 },
                                 modifier = Modifier
-                                    .width(200.dp),
+                                    .width(200.dp)
+                                    .padding(top = 24.dp),
                                 shape = RoundedCornerShape(30.dp),
                                 colors = ButtonDefaults.buttonColors(colorResource(id = R.color.eulirio_purple))
 
@@ -436,8 +465,9 @@ fun registerPage() {
                                 colorIconUser = colorResource(id = R.color.eulirio_purple_text_color_border)
                             }
 
-                            if(!emailValue.isEmpty()) {
+                            if(!emailValue.isEmpty() && '@' in emailValue) {
                                 emailErrorRequiredInput = false
+                                invalidEmail = false
                                 colorIconEmail = colorResource(id = R.color.eulirio_purple_text_color_border)
                             }
 
@@ -446,7 +476,7 @@ fun registerPage() {
                                 colorIconPassword = colorResource(id = R.color.eulirio_purple_text_color_border)
                             }
 
-                            if(!confirmPasswordValue.isEmpty()) {
+                            if(!confirmPasswordValue.isEmpty() && passwordValue == confirmPasswordValue) {
                                 confirmPasswordErrorRequiredInput = false
                                 colorIconConfirmPassword = colorResource(id = R.color.eulirio_purple_text_color_border)
                             }
@@ -458,7 +488,6 @@ fun registerPage() {
         }
 
     }
-
 }
 
 
