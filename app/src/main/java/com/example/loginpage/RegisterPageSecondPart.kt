@@ -160,7 +160,7 @@ fun registerPageSecondPart() {
                             },
                                 modifier = Modifier
                                     .height(50.dp)
-                                    .width(120.dp)
+                                    .width(200.dp)
                                     .border(
                                         2.dp,
                                         colorResource(id = R.color.eulirio_purple),
@@ -173,8 +173,10 @@ fun registerPageSecondPart() {
 
                             ) {
 
-                                Text(text = "Pick a date", color = colorResource(id = R.color.eulirio_purple_text_color))
-                                Spacer(modifier = Modifier.height(16.dp))
+                                Text(
+                                    text = "Escolha uma data",
+                                    color = colorResource(id = R.color.eulirio_purple_text_color)
+                                )
 
                             }
 

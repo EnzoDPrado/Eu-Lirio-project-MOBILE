@@ -9,8 +9,10 @@ import androidx.compose.ui.unit.sp
 import com.example.loginpage.R
 
 val Spartan = FontFamily(
-    Font(R.font.spartan_bold),
-    Font(R.font.spartan_extralight)
+    Font(R.font.spartan_regular),
+    Font(R.font.spartan_light),
+    Font(R.font.spartan_extralight),
+    Font(R.font.spartan_bold)
 )
 
 val Montserrat = FontFamily(
@@ -23,6 +25,11 @@ val Typography = Typography(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp
+    ),
+    body2 = TextStyle(
+        fontFamily = Spartan,
+        fontWeight = FontWeight.W100,
+        fontSize = 10.sp
     ),
     h1 = TextStyle(
         fontFamily = Spartan,
