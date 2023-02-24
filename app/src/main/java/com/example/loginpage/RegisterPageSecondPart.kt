@@ -1,19 +1,24 @@
 package com.example.loginpage
 
+import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
+import android.widget.DatePicker
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key.Companion.Calendar
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -24,7 +29,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.loginpage.ui.theme.LoginPageTheme
+import com.vanpra.composematerialdialogs.MaterialDialog
+import com.vanpra.composematerialdialogs.datetime.date.datepicker
+import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class RegisterPageSecondPart : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +53,7 @@ class RegisterPageSecondPart : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun registerPageSecondPart() {
@@ -49,6 +61,23 @@ fun registerPageSecondPart() {
 
     var userName by rememberSaveable {
         mutableStateOf("")
+    }
+
+    var pickedDate by remember {
+        mutableStateOf(LocalDate.now())
+    }
+
+    val pickedTime by remember {
+        mutableStateOf(LocalDate.now())
+    }
+
+    val formattedDate by remember {
+        derivedStateOf {
+            DateTimeFormatter
+                .ofPattern("dd MMM yyyy")
+                .format(pickedDate)
+        }
+
     }
 
 
@@ -109,55 +138,99 @@ fun registerPageSecondPart() {
                         )
                         Spacer(modifier = Modifier.height(20.dp))
 
+                        val dateDialogState = rememberMaterialDialogState()
+
                         Column(
                             modifier = Modifier
-                                .fillMaxSize()
-                                .padding(start = 24.dp)
-                            ,
-                            horizontalAlignment = Alignment.Start,
+                                .fillMaxSize(),
+                            horizontalAlignment = Alignment.CenterHorizontally,
 
-                        ) {
+                            ) {
                             Text(
                                 color = colorResource(id = R.color.eulirio_purple_text_color),
                                 text = stringResource(id = R.string.date_of_birth),
                                 fontWeight = FontWeight.SemiBold,
                                 fontSize = 15.sp
-                                )
+                            )
 
-                            Row(
+                            Spacer(modifier = Modifier.height(10.dp))
+
+                            Button(onClick = {
+                                dateDialogState.show()
+                            },
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                ,
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically
+                                    .height(50.dp)
+                                    .width(120.dp)
+                                    .border(
+                                        2.dp,
+                                        colorResource(id = R.color.eulirio_purple),
+                                        RoundedCornerShape(30.dp)
+                                    )
+                                    ,
+                                shape = RoundedCornerShape(30.dp),
+                                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.white))
+
 
                             ) {
-                                
+
+                                Text(text = "Pick a date", color = colorResource(id = R.color.eulirio_purple_text_color))
+                                Spacer(modifier = Modifier.height(16.dp))
+
+                            }
+
+                            Spacer(modifier = Modifier.height(20.dp))
+
+                            Text(
+                                text = "$formattedDate",
+                                color = colorResource(id = R.color.eulirio_purple_text_color),
+                                fontSize = 18.sp
+
+                            )
+
+                            Spacer(modifier = Modifier.height(80.dp))
+
+                            val context = LocalContext.current
+                            val intent = Intent(context, RegisterPageThirdPart01::class.java)
+
+                            Button(
+                                onClick = {
+                                    context.startActivity(intent)
+                                },
+                                modifier = Modifier
+                                    .width(160.dp)
+                                    .height(50.dp),
+                                shape = RoundedCornerShape(30.dp),
+                                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.eulirio_purple))
+
+
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.advance),
+                                    color = colorResource(
+                                        id = R.color.white
+                                    ),
+                                    fontSize = 18.sp
+                                )
                             }
 
                         }
 
-
-
-
-                        Button(
-                            onClick = {
-
-                            },
-                            modifier = Modifier
-                                .width(160.dp)
-                                .height(34.dp),
-                            shape = RoundedCornerShape(30.dp),
-                            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.eulirio_purple))
-
-
+                        MaterialDialog(
+                            dialogState = dateDialogState,
+                            buttons = {
+                                positiveButton(text = "Ok")
+                                negativeButton(text = "Cancel")
+                            }
                         ) {
-                            Text(
-                                text = stringResource(id = R.string.advance),
-                                color = colorResource(
-                                    id = R.color.white
-                                )
-                            )
+                            datepicker(
+                                initialDate = LocalDate.now(),
+                                title = "Pick a Date",
+                                allowedDateValidator = {
+                                    it.dayOfYear < 1920
+                                }
+                            ) {
+                                pickedDate = it
+                            }
                         }
 
 

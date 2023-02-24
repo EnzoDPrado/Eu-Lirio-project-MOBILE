@@ -16,5 +16,13 @@
     <string name="erro_message_input_required">Todos os campos são obrigatórios.</string>
     <string name="erro_message_confirm_password_incorrect">Por favor, insira senhas iguais.</string>
     <string name="erro_message_invalid_email">Insira um e-mail válido, por favor.</string>
+    <string name="description_third_page_pt1">**</string>
+    <string name="description_third_page_pt2">**</string>
+    <string name="description_third_page_pt3">**</string>
+    <string name="description_third_page_pt4">**</string>
+    <string name="description_third_page_pt5">**</string>
+    <string name="finish">finish</string>
+    <string name="Refinish">refinish</string>
+    <string name="escolha_data">seleciona a data</string>
 
 </resources>
