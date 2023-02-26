@@ -4,43 +4,30 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.*
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Email
-import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.loginpage.ui.components.GenreCard
 import com.example.loginpage.ui.theme.LoginPageTheme
 
 class RegisterPageThirdPart01 : ComponentActivity() {
@@ -63,9 +50,8 @@ class RegisterPageThirdPart01 : ComponentActivity() {
 @Composable
 fun registerPageThirdPart() {
 
-    val context = LocalContext.current
+//    val context = LocalContext.current
 
-    val focusManager = LocalFocusManager.current
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -104,16 +90,20 @@ fun registerPageThirdPart() {
                                 .padding(bottom = 4.dp)
                         ) {
                             Column(
+                                modifier = Modifier
+                                    .padding(bottom = 16.dp)
                             ) {
                                 Text(
                                     text = "olá, [nome]".uppercase(),
                                     modifier = Modifier
-                                        .padding(top = 40.dp)
+                                        .padding(top = 32.dp)
                                         .fillMaxWidth(),
                                     color = colorResource(id = R.color.eulirio_purple_text_color),
                                     textAlign = TextAlign.Center,
                                     style = MaterialTheme.typography.h2
                                 )
+
+                                Spacer(modifier = Modifier.height(8.dp))
 
                                 val descriptionP1 = stringResource(id = R.string.description_third_page_pt1)
                                 val descriptionP2 = stringResource(id = R.string.description_third_page_pt2)
@@ -128,8 +118,7 @@ fun registerPageThirdPart() {
                                         withStyle(style = SpanStyle(
                                             color = colorResource(id = R.color.eulirio_purple_text_color),
                                             fontWeight = FontWeight.W900
-                                        )
-                                        ) {
+                                        )) {
                                             append("$descriptionP2 ")
                                         }
 
@@ -145,26 +134,27 @@ fun registerPageThirdPart() {
                                         append(descriptionP5)
                                     },
 
-                                    modifier = Modifier.padding(start = 48.dp, end = 48.dp),
+                                    modifier = Modifier.padding(start = 34.dp, end = 34.dp),
                                     textAlign = TextAlign.Center,
                                     style = MaterialTheme.typography.body2,
                                 )
+
                             }
 
-                            Spacer(modifier = Modifier.height(12.dp))
+                            val id = listOf(1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 21, 32, 54, 77, 23, 25)
 
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .verticalScroll(rememberScrollState()),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
+                            LazyVerticalGrid(
+                                columns = GridCells.Fixed(2),
+
+                                // content padding
+                                contentPadding = PaddingValues(
+                                    start = 24.dp,
+                                    top = 4.dp,
+                                    bottom = 70.dp
+                                )
                             ) {
-
-                                LazyColumn(
-
-                                ) {
-
+                                items(id) {
+                                    GenreCard(it)
                                 }
                             }
                         }
@@ -184,7 +174,7 @@ fun registerPageThirdPart() {
                                 colors = ButtonDefaults.buttonColors(colorResource(id = R.color.eulirio_purple))
                             ) {
                                 Text(
-                                    text = stringResource(id = R.string.Refinish),
+                                    text = stringResource(id = R.string.finish),
                                     color = colorResource(
                                         id = R.color.white
                                     ),
@@ -199,7 +189,6 @@ fun registerPageThirdPart() {
             }
         }
     }
-
 }
 
 
