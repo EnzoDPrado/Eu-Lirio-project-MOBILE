@@ -122,6 +122,8 @@ fun registerPage() {
         FocusRequester()
     }
 
+    val emailVerify = emailValue.split('@')
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -425,7 +427,7 @@ fun registerPage() {
                                         ).show()
                                     }
 
-                                    if ('@' !in emailValue) {
+                                    if (' ' in emailValue || '@' !in emailValue || emailVerify[0].isEmpty() || emailVerify[1].isEmpty()) {
                                         emailErrorRequiredInput = true
                                         colorIconEmail = Color(0xFFB00020)
                                         emailFocusRequester.requestFocus()
@@ -437,6 +439,8 @@ fun registerPage() {
 
                                         val intent = Intent(context, RegisterPageSecondPart::class.java)
                                         context.startActivity(intent)
+
+                                        invalidEmail = false
 
                                     }
 
@@ -465,7 +469,7 @@ fun registerPage() {
                                 colorIconUser = colorResource(id = R.color.eulirio_purple_text_color_border)
                             }
 
-                            if(!emailValue.isEmpty() && '@' in emailValue) {
+                            if(!emailValue.isEmpty() && ' ' in emailValue && '@' !in emailValue && emailVerify[0].isEmpty() && emailVerify[1].isEmpty()) {
                                 emailErrorRequiredInput = false
                                 invalidEmail = false
                                 colorIconEmail = colorResource(id = R.color.eulirio_purple_text_color_border)
