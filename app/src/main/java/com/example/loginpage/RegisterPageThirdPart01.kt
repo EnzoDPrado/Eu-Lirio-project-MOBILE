@@ -1,6 +1,5 @@
 package com.example.loginpage
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,10 +11,10 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -28,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.loginpage.ui.components.GenreCard
+import com.example.loginpage.ui.components.getClickState
 import com.example.loginpage.ui.theme.LoginPageTheme
 
 class RegisterPageThirdPart01 : ComponentActivity() {
@@ -39,17 +39,21 @@ class RegisterPageThirdPart01 : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
-                    registerPageThirdPart()
+                    registerPageThirdPart(getCLickState = getClickState())
                 }
             }
         }
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+//@Preview(showBackground = true, showSystemUi = true)
+// higher order function
 @Composable
-fun registerPageThirdPart() {
+fun registerPageThirdPart(getCLickState: Unit) {
 
+    var checkState by rememberSaveable {
+        getCLickState()
+    }
 //    val context = LocalContext.current
 
     Column(
@@ -154,7 +158,7 @@ fun registerPageThirdPart() {
                                 )
                             ) {
                                 items(id) {
-                                    GenreCard(it)
+                                    GenreCard(it, getCLickState)
                                 }
                             }
                         }

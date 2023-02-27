@@ -1,5 +1,6 @@
 package com.example.loginpage.ui.components
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,11 +18,20 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.loginpage.R
 
+@Composable
+fun getClickState() { mutableStateOf(false) }
+//@Composable
+//var getClickState = {
+//    var check by rememberSaveable {
+//    mutableStateOf(false)
+//}
+//}
 
 @Composable
-fun GenreCard(genre: Int) {
-    var check by rememberSaveable {
-        mutableStateOf(false)
+fun GenreCard(genre: Int, getCLickState: () -> MutableState<Boolean>) {
+
+    var checkState by rememberSaveable {
+        getCLickState()
     }
 
     Card(
@@ -35,7 +45,7 @@ fun GenreCard(genre: Int) {
                 RoundedCornerShape(30.dp)
             )
             .clickable {
-                check = !check
+                checkState = !checkState
             },
         shape = RoundedCornerShape(30.dp),
     ) {
@@ -49,7 +59,7 @@ fun GenreCard(genre: Int) {
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color.eulirio_purple)
             )
-            if (check) {
+            if (checkState) {
                 Box(
                     modifier = Modifier.fillMaxSize(),
                     contentAlignment = Alignment.CenterEnd
@@ -61,9 +71,9 @@ fun GenreCard(genre: Int) {
                             .background(colorResource(id = R.color.eulirio_purple))
                     ) {
                         Checkbox(
-                            checked = check,
+                            checked = checkState,
                             onCheckedChange = {
-                                check = it
+                                checkState = it
                             },
                             colors = CheckboxDefaults.colors(
                                 checkedColor = colorResource(id = R.color.eulirio_purple),

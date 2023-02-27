@@ -279,6 +279,9 @@ fun loginPage() {
                                         passwordFocusRequester.requestFocus()
                                     }
                                     else passwordErrorRequiredInput = false
+//
+//                                    val intent = Intent(context, RegisterPageThirdPart01::class.java)
+//                                    context.startActivity(intent)
                                 },
                                 modifier = Modifier
                                     .width(160.dp),
