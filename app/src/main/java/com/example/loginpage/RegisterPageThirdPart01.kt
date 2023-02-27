@@ -49,7 +49,7 @@ class RegisterPageThirdPart01 : ComponentActivity() {
 //@Preview(showBackground = true, showSystemUi = true)
 // higher order function
 @Composable
-fun registerPageThirdPart(getCLickState: Unit) {
+fun registerPageThirdPart(getCLickState: () -> MutableState<Boolean>) {
 
     var checkState by rememberSaveable {
         getCLickState()

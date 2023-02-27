@@ -19,7 +19,11 @@ import androidx.compose.ui.unit.sp
 import com.example.loginpage.R
 
 @Composable
-fun getClickState() { mutableStateOf(false) }
+fun getClickState(): MutableState<Boolean> {
+    return rememberSaveable {
+    mutableStateOf(false)
+ }
+}
 //@Composable
 //var getClickState = {
 //    var check by rememberSaveable {
