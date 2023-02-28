@@ -192,7 +192,7 @@ fun registerPageSecondPart() {
                             Spacer(modifier = Modifier.height(80.dp))
 
                             val context = LocalContext.current
-                            val intent = Intent(context, RegisterPageThirdPart01::class.java)
+                            val intent = Intent(context, RegisterPageThirdPart::class.java)
 
                             Button(
                                 onClick = {

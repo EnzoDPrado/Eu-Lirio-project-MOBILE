@@ -23,6 +23,7 @@
     <string name="erro_message_input_required">Todos os campos são obrigatórios.</string>
     <string name="erro_message_confirm_password_incorrect">Por favor, insira senhas iguais.</string>
     <string name="erro_message_invalid_email">Insira um e-mail válido, por favor.</string>
+    <string name="erro_message_invalid_user">Não são permitidos espaços. Insira um username válido, por favor.</string>
 
     <string name="description_third_page_pt1">Escolha</string>
     <string name="description_third_page_pt2">até três gêneros</string>
@@ -32,5 +33,6 @@
 
     <string name="Refinish">refinish</string>
     <string name="escolha_data">seleciona a data</string>
+    <string name="title_activity_register_page_third_parte">RegisterPageThirdParte</string>
 
 </resources>

@@ -39,7 +39,7 @@ class RegisterPageThirdPart01 : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
                 ) {
-                    registerPageThirdPart(getCLickState = getClickState())
+                    registerPageThirdParte(getCLickState = getClickState())
                 }
             }
         }
@@ -49,7 +49,7 @@ class RegisterPageThirdPart01 : ComponentActivity() {
 //@Preview(showBackground = true, showSystemUi = true)
 // higher order function
 @Composable
-fun registerPageThirdPart(getCLickState: () -> MutableState<Boolean>) {
+fun registerPageThirdParte(getCLickState: () -> MutableState<Boolean>) {
 
     var checkState by rememberSaveable {
         getCLickState()
@@ -196,8 +196,8 @@ fun registerPageThirdPart(getCLickState: () -> MutableState<Boolean>) {
 }
 
 
-@Preview(showBackground = true)
-@Composable
-fun registerPageThirdPartPreview() {
-    registerPageThirdPartPreview()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun registerPageThirdPartPreview() {
+//    registerPageThirdPartPreview()
+//}

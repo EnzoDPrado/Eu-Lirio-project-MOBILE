@@ -68,7 +68,7 @@ fun loginPage() {
         mutableStateOf("")
     }
 
-    var passwordValue by remember {
+    var passwordValue by rememberSaveable {
         mutableStateOf("")
     }
     var showPassword by remember {

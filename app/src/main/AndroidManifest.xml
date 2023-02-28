@@ -12,6 +12,11 @@
         android:theme="@style/Theme.LoginPage"
         tools:targetApi="31">
         <activity
+            android:name=".RegisterPageThirdParte"
+            android:exported="false"
+            android:label="@string/title_activity_register_page_third_parte"
+            android:theme="@style/Theme.LoginPage" />
+        <activity
             android:name=".RegisterPageSecondPart"
             android:exported="false"
             android:label="@string/title_activity_register_page_second_part"

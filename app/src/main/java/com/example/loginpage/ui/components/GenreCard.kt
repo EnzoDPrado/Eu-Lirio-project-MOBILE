@@ -19,22 +19,9 @@ import androidx.compose.ui.unit.sp
 import com.example.loginpage.R
 
 @Composable
-fun getClickState(): MutableState<Boolean> {
-    return rememberSaveable {
-    mutableStateOf(false)
- }
-}
-//@Composable
-//var getClickState = {
-//    var check by rememberSaveable {
-//    mutableStateOf(false)
-//}
-//}
-
-@Composable
 fun GenreCard(genre: Int, getCLickState: () -> MutableState<Boolean>) {
 
-    var checkState by rememberSaveable {
+    var checkState by rememberSaveable() {
         getCLickState()
     }
 
@@ -42,7 +29,7 @@ fun GenreCard(genre: Int, getCLickState: () -> MutableState<Boolean>) {
         modifier = Modifier
             .fillMaxWidth(.4f)
             .height(48.dp)
-            .padding(end = 24.dp, bottom = 8.dp)
+            .padding(start = 4.dp, end = 4.dp, bottom = 8.dp)
             .border(
                 1.5.dp,
                 colorResource(id = R.color.eulirio_purple),

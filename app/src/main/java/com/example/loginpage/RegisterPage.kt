@@ -61,7 +61,7 @@ fun registerPage() {
 
     val focusManager = LocalFocusManager.current
 
-    var userValue by remember{
+    var userValue by rememberSaveable{
         mutableStateOf("")
     }
 
@@ -69,14 +69,14 @@ fun registerPage() {
         mutableStateOf("")
     }
 
-    var passwordValue by remember {
+    var passwordValue by rememberSaveable {
         mutableStateOf("")
     }
     var showPassword by remember {
         mutableStateOf(false)
     }
 
-    var confirmPasswordValue by remember{
+    var confirmPasswordValue by rememberSaveable{
         mutableStateOf("")
     }
     var showConfirmPassword by remember {
@@ -97,6 +97,9 @@ fun registerPage() {
     }
 
     var invalidEmail by remember {
+        mutableStateOf(false)
+    }
+    var invalidUser by remember {
         mutableStateOf(false)
     }
 
@@ -216,6 +219,15 @@ fun registerPage() {
                                 singleLine = true
                             )
 
+                            if (invalidUser) Text(
+                                modifier = Modifier
+                                    .padding(start = 16.dp, end = 16.dp, top = 3.dp),
+                                text = stringResource(id = R.string.erro_message_invalid_user),
+                                color = Color(0xFFB00020),
+                                fontSize = 12.sp,
+                                textAlign = TextAlign.Center
+                            )
+
                             Spacer(modifier = Modifier.height(8.dp))
 
                             OutlinedTextField(
@@ -258,10 +270,12 @@ fun registerPage() {
 
                             if (invalidEmail) Text(
                                     modifier = Modifier
-                                        .padding(top = 3.dp),
+                                        .padding(top = 3.dp)
+                                        .padding(start = 16.dp, end = 16.dp, top = 3.dp),
                                     text = stringResource(id = R.string.erro_message_invalid_email),
                                     color = Color(0xFFB00020),
                                     fontSize = 12.sp,
+                                textAlign = TextAlign.Center
                             )
 
                             Spacer(modifier = Modifier.height(8.dp))
@@ -427,12 +441,20 @@ fun registerPage() {
                                         ).show()
                                     }
 
-                                    if (' ' in emailValue || '@' !in emailValue || emailVerify[0].isEmpty() || emailVerify[1].isEmpty()) {
+                                    if (' ' in emailValue || '@' !in emailValue || emailVerify[0].isEmpty() || emailVerify[1].isEmpty() || ".com" !in emailVerify[1]) {
                                         emailErrorRequiredInput = true
                                         colorIconEmail = Color(0xFFB00020)
                                         emailFocusRequester.requestFocus()
 
                                         invalidEmail = true
+                                    }
+
+                                    if (' ' in userValue) {
+                                        userErrorRequiredInput = true
+                                        colorIconUser = Color(0xFFB00020)
+                                        userFocusRequester.requestFocus()
+
+                                        invalidUser = true
                                     }
 
                                     if (!userErrorRequiredInput && !emailErrorRequiredInput && !passwordErrorRequiredInput && !confirmPasswordErrorRequiredInput) {
@@ -441,7 +463,7 @@ fun registerPage() {
                                         context.startActivity(intent)
 
                                         invalidEmail = false
-
+                                        invalidUser = false
                                     }
 
 
@@ -464,23 +486,24 @@ fun registerPage() {
                                 )
                             }
 
-                            if(!userValue.isEmpty()) {
+                            if(userValue.isNotEmpty() && ' ' !in userValue) {
                                 userErrorRequiredInput = false
+                                invalidUser = false
                                 colorIconUser = colorResource(id = R.color.eulirio_purple_text_color_border)
                             }
 
-                            if(!emailValue.isEmpty() && ' ' in emailValue && '@' !in emailValue && emailVerify[0].isEmpty() && emailVerify[1].isEmpty()) {
+                            if(emailValue.isNotEmpty() && ' ' !in emailValue && '@' in emailValue && emailVerify[0].isNotEmpty() && emailVerify[1].isNotEmpty() && ".com" in emailVerify[1]) {
                                 emailErrorRequiredInput = false
                                 invalidEmail = false
                                 colorIconEmail = colorResource(id = R.color.eulirio_purple_text_color_border)
                             }
 
-                            if(!passwordValue.isEmpty()) {
+                            if(passwordValue.isNotEmpty()) {
                                 passwordErrorRequiredInput = false
                                 colorIconPassword = colorResource(id = R.color.eulirio_purple_text_color_border)
                             }
 
-                            if(!confirmPasswordValue.isEmpty() && passwordValue == confirmPasswordValue) {
+                            if(confirmPasswordValue.isNotEmpty() && passwordValue == confirmPasswordValue) {
                                 confirmPasswordErrorRequiredInput = false
                                 colorIconConfirmPassword = colorResource(id = R.color.eulirio_purple_text_color_border)
                             }
