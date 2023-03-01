@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,9 +43,10 @@ class RegisterPageThirdPart : ComponentActivity() {
             LoginPageTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
-                    modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colors.background
                 ) {
-                    registerPageThirdPart(getCLickState = getClickState())
+                    registerPageThirdPart(getClickState())
                 }
             }
         }
@@ -50,13 +55,11 @@ class RegisterPageThirdPart : ComponentActivity() {
 
 @Composable
 fun getClickState(): () -> MutableState<Boolean> {
-    //run {
     var checkState = rememberSaveable {
         mutableStateOf(false)
     }
 
     return { checkState }
-    // }
 }
 
 @Composable
@@ -132,7 +135,8 @@ fun registerPageThirdPart(getCLickState: () -> MutableState<Boolean>) {
                                         withStyle(style = SpanStyle(
                                             color = colorResource(id = R.color.eulirio_purple_text_color),
                                             fontWeight = FontWeight.W900
-                                        )) {
+                                        )
+                                        ) {
                                             append("$descriptionP2 ")
                                         }
 
@@ -141,7 +145,8 @@ fun registerPageThirdPart(getCLickState: () -> MutableState<Boolean>) {
                                         withStyle(style = SpanStyle(
                                             color = colorResource(id = R.color.eulirio_purple_text_color),
                                             fontWeight = FontWeight.W900
-                                        )) {
+                                        )
+                                        ) {
                                             append("$descriptionP4 ")
                                         }
 
@@ -156,6 +161,7 @@ fun registerPageThirdPart(getCLickState: () -> MutableState<Boolean>) {
                             }
 
                             val id = listOf(1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 21, 32, 54, 77, 23, 25)
+                            val idKey = listOf(1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 18, 20, 21, 32, 54, 77, 23, 25)
 
                             LazyVerticalGrid(
                                 columns = GridCells.Fixed(2),
@@ -168,7 +174,9 @@ fun registerPageThirdPart(getCLickState: () -> MutableState<Boolean>) {
                                     bottom = 70.dp
                                 )
                             ) {
-                                items(id) {
+                                items(
+                                    items = id
+                                ) {
                                     GenreCard(it, getCLickState)
                                 }
                             }

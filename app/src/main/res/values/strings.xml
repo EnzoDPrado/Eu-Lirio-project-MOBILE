@@ -34,5 +34,6 @@
     <string name="Refinish">refinish</string>
     <string name="escolha_data">seleciona a data</string>
     <string name="title_activity_register_page_third_parte">RegisterPageThirdParte</string>
+    <string name="title_activity_register_page_third_part">RegisterPageThirdPart</string>
 
 </resources>
