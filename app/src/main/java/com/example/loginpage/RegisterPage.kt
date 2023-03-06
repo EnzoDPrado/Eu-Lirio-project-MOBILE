@@ -12,6 +12,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.runtime.*
@@ -36,6 +37,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.loginpage.ui.theme.LoginPageTheme
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.ui.graphics.vector.ImageVector
 
 class RegisterPage : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -138,7 +143,7 @@ fun registerPage() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
-                painter = painterResource(id = R.drawable.logoeulirio),
+                painter = painterResource(id = R.drawable.logo_eu_lirio),
                 contentDescription = "",
                 modifier = Modifier
                     .height(100.dp)
@@ -314,7 +319,7 @@ fun registerPage() {
                                         Icon(
                                             modifier = Modifier.height(16.dp),
                                             contentDescription = if (showPassword) "Show Password" else "Hide Password",
-                                            imageVector = if (showPassword) Icons.Outlined.Email else Icons.Outlined.Lock,
+                                            imageVector = if (showPassword) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                                             tint = Color(0xFF010101)
                                         )
                                     }
@@ -322,11 +327,11 @@ fun registerPage() {
 
                                 isError = passwordErrorRequiredInput,
 
+                                visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
+
                                 keyboardOptions =  KeyboardOptions(
                                     imeAction = ImeAction.Next
                                 ),
-
-                                visualTransformation = if (showPassword) VisualTransformation.None else PasswordVisualTransformation(),
 
                                 singleLine = true
                             )
@@ -367,7 +372,7 @@ fun registerPage() {
                                         Icon(
                                             modifier = Modifier.height(16.dp),
                                             contentDescription = if (showConfirmPassword) "Show Password" else "Hide Password",
-                                            imageVector = if (showConfirmPassword) Icons.Outlined.Email else Icons.Outlined.Lock,
+                                            imageVector = if (showConfirmPassword) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                                             tint = Color(0xFF010101)
                                         )
                                     }

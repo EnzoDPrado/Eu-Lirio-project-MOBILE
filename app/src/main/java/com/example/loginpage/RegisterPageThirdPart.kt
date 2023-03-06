@@ -80,7 +80,7 @@ fun registerPageThirdPart(getCLickState: () -> MutableState<Boolean>) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
-                painter = painterResource(id = R.drawable.logoeulirio),
+                painter = painterResource(id = R.drawable.logo_eu_lirio),
                 contentDescription = "",
                 modifier = Modifier
                     .height(100.dp)

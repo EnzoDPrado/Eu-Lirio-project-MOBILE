@@ -90,7 +90,7 @@ fun registerPageSecondPart() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
-                painter = painterResource(id = R.drawable.logoeulirio),
+                painter = painterResource(id = R.drawable.logo_eu_lirio),
                 contentDescription = "",
                 modifier = Modifier
                     .height(100.dp)
@@ -128,8 +128,8 @@ fun registerPageSecondPart() {
                                 userName = it;
                             },
                             modifier = Modifier
-                                .height(53.dp)
-                                .width(280.dp),
+                                .fillMaxWidth()
+                                .padding(start = 24.dp, end = 24.dp),
                             shape = RoundedCornerShape(12.dp),
                             textStyle = TextStyle(fontSize = 12.sp),
                             label = {

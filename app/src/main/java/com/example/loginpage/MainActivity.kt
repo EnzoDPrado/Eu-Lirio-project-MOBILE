@@ -26,6 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.loginpage.ui.theme.LoginPageTheme
 import androidx.compose.material.Icon
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.ui.focus.FocusRequester
@@ -108,7 +110,7 @@ fun loginPage() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
-                painter = painterResource(id = R.drawable.logoeulirio),
+                painter = painterResource(id = R.drawable.logo_eu_lirio),
                 contentDescription = "",
                 modifier = Modifier
                     .height(100.dp)
@@ -220,7 +222,7 @@ fun loginPage() {
                                     Icon(
                                         modifier = Modifier.height(16.dp),
                                         contentDescription = if (showPassword) "Show Password" else "Hide Password",
-                                        imageVector = if (showPassword) Icons.Outlined.Email else Icons.Outlined.Lock,
+                                        imageVector = if (showPassword) Icons.Default.Visibility else Icons.Default.VisibilityOff,
                                         tint = Color(0xFF010101)
                                     )
                                 }
